@@ -29,7 +29,7 @@ def index(request):
         import telebot
         import datetime
         from KPN.models import User
-        bot = telebot.TeleBot('7462217215:AAG63g7vFWalIIo4I3Wt_0F5qbk_LbFtV6E')
+        bot = telebot.TeleBot('')
         @bot.message_handler(content_types=['text'])
         def get_text_messages(message):
             if message.text == "/start":
