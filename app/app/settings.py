@@ -20,7 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =
+SECRET_KEY = 'django-insecure-8e8u!-33lv0r3#w-^-1n0ivh2aj-wb9&or))x&e@*ldzb_7b'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -86,6 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+    #'default': {'ENGINE': 'django.db.backends.postgresql_psycopg2','NAME': 'KP229','USER': 'KP229_user','PASSWORD': '2077',}
 }
 
 
@@ -130,3 +136,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CSRF_TRUSTED_ORIGINS=['https://kringeproduction.ru']

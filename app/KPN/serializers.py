@@ -6,4 +6,4 @@ from KPN.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['Telegram_hash', 'KPСS']
+        fields = ['Telegram_hash', 'KPCS','Password']
