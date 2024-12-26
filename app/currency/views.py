@@ -34,6 +34,14 @@ class Currencyview(APIView):
             curr.sale_price = sale_average
             curr.buy_price = buy_average
             curr.price = average
+            history = curr.history
+            history = history.split(",")
+            print(history)
+            history.append(str(average))
+            str_history = ','
+            str_history = str_history.join(history)
+            print(str_history)
+            curr.history = str_history
             curr.save()
         snippets = Currency.objects.all()
         serializer = CurrencySerializer(snippets, many=True)
