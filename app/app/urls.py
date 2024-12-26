@@ -20,15 +20,17 @@ from rest_framework.routers import SimpleRouter
 
 from KPN.views import index, index2, KPNview, register
 
-router = SimpleRouter()
-router.register('api/users', KPNview)
+from currency.views import Currencyview, listValutaViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('KPN_BOT/', index),
     path('', index2),
     path('user_data_send/', register),
-
+    path('api/users', KPNview.as_view()),
+    path('api/users/<int:pk>/', KPNview.as_view()),
+    path('api/currency', Currencyview.as_view()),
+    path('api/currency/<int:pk>/', Currencyview.as_view()),
+    path('api/currency/list', listValutaViewSet.as_view({'get': 'list'})),
 ]
 
-urlpatterns += router.urls

@@ -1,9 +1,16 @@
 from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 import telebot
 from KPN.models import User
 from KPN.serializers import UserSerializer
 from currency.models import Currency
+from rest_framework.response import Response
+from rest_framework import status
+
+
 
 user_pass1 = ''
 user_pass2 = ' '
@@ -22,9 +29,35 @@ def register(request):
     if not User.objects.filter(Telegram_hash=username).exists():User.objects.create(Telegram_hash=username, KPСS=moneys,Rubles=0)
 
     return render(request, 'register.html')
-class KPNview(ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+
+class KPNview(APIView):
+    def get(self, request, format=None):
+        snippets = User.objects.all()
+        serializer = UserSerializer(snippets, many=True)
+        filter_backends = [DjangoFilterBackend,SearchFilter]
+        search_fields = "__all__"
+        return Response(serializer.data)
+
+
+    def post(self, request, format=None):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        serializer = UserSerializer(snippet, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        snippet.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 def index(request):
     while True:
